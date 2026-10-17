@@ -1,4 +1,4 @@
-#ifndef JIDA_MATRIX_H_
+#ifndef JIDAO_MATRIX_H_
 #define JIDAO_MATRIX_H_
 
 #include <array>
