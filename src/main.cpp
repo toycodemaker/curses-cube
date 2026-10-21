@@ -1,17 +1,20 @@
-#include <print>
-#include "Matrix.h"
+#include <ncurses.h>
+
+char buff[512];
 
 int main()
-{
-    Jidao::Matrix<2, 2> m = {
-        {2, 0},
-        {0, 2}
-    };
-    Jidao::Vector<2> v = {
-        1,1
-    };
-    Jidao::Matrix<2, 1> r = m*v;
-    auto [x,y] = r.get();
-    std::println("{},{}", x, y);
-    std::println("Hello Matrix");
+{	
+    initscr();
+    noecho();
+    cbreak();
+    keypad(stdscr, true);
+
+    char ch;
+    while ((ch=getch())!='q') {
+        printw("the key now is %c, the value is %d\n", ch, (int)ch);
+        refresh();
+    }
+
+    endwin();
+	return 0;
 }
