@@ -5,6 +5,6 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS on)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED on)
 
-add_executable(r ./src/main.cpp)
+add_executable(r ./src/main.cpp ./src/Liner.cpp)
 target_include_directories(r PRIVATE ./include)
 target_link_libraries(r PRIVATE ncurses)

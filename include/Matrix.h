@@ -20,7 +20,7 @@ public:
             for (int j=0; j<col; j++)
                 matrix[i][j] = 0;
     }
-    Matrix(std::initializer_list<std::initializer_list<int>> rhv) requires(col!=1) {
+    Matrix(std::initializer_list<std::initializer_list<float>> rhv) requires(col!=1) {
         assert(rhv.size() == row);
         for (const auto& i:rhv) {
             assert(i.size() == col);
@@ -29,11 +29,11 @@ public:
         for (const auto& r : rhv) {
             assert(r.size() == col);
             int j = 0;
-            for (int v : r) matrix[i][j++] = v;
+            for (auto v : r) matrix[i][j++] = v;
             ++i;
         }
     }
-    Matrix(std::initializer_list<int> rhv)requires(col==1) {
+    Matrix(std::initializer_list<float> rhv)requires(col==1) {
         assert(rhv.size() == row);
         auto b = rhv.begin();
         for (auto& i:matrix) {
@@ -61,7 +61,7 @@ public:
                 matrix[i][j] -= rhv.matrix[i][j];
         return *this;
     }
-    Matrix& operator*=(int value) {
+    Matrix& operator*=(float value) {
         for (int i=0; i<row; i++)
             for (int j=0; j<col; j++)
                 matrix[i][j] *= value;
@@ -78,11 +78,11 @@ public:
         return result;
     }
 
-    int get(int x, int y) const {
+    float get(int x, int y) const {
         return matrix[x-1][y-1];
     }
-    std::array<int, row> get() const requires(col==1) {
-        std::array<int, row> vec;
+    std::array<float, row> get() const requires(col==1) {
+        std::array<float, row> vec;
         auto b = vec.begin();
         for (const auto& i:matrix)
             *(b++) = i[0];
@@ -90,11 +90,25 @@ public:
     }
     
 private:
-    std::array<std::array<int, col>, row> matrix;
+    std::array<std::array<float, col>, row> matrix;
 };
 
 template <int d>
 using Vector = Matrix<d, 1>;
+
+template <int row, int col> requires(row>0 && col>0)
+Matrix<row, col> operator+(float lhv, const Matrix<row, col> rhv)
+{
+    Matrix<row, col> new_matrix = rhv;
+    return new_matrix+=lhv;
+}
+
+template <int row, int col> requires(row>0 && col>0)
+Matrix<row, col> operator*(float lhv, const Matrix<row, col> rhv)
+{
+    Matrix<row, col> new_matrix = rhv;
+    return new_matrix*=lhv;
+}
 
 
 // end of namespace Jidao
