@@ -15,7 +15,8 @@
         devShells.default = pkgs.mkShell {
           # 构建工具和依赖
           packages = with pkgs; [
-            gcc
+            clang-tools
+            clang
             gnumake
             pkg-config
           ];
@@ -27,6 +28,7 @@
 
           # 进入环境时自动执行的脚本
           shellHook = ''
+            export PATH="/usr/bin:$PATH"
             echo "C/C++ dev shell loaded. GCC version: $(gcc --version | head -n1)"
           '';
         };
